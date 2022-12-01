@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Input</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        .form-container {
+            background-color: white;
+            width: 320px;
+        }
+
+        .form-row {
+            padding: 4px 0;
+        }
+
+        .form-row label {
+            height: 40px;
+        }
+
+        .form-row select {
+            height: 40px;
+            width: 100%;
+        }
+
+        .form-row input {
+            height: 40px;
+            width: 100%;
+        }
+
+        .output {
+            color: burlywood;
+            overflow: auto;
+            width: 100%;
+            height: calc(100vh - 80px);
+        }
+
+        .output p:nth-child(odd) {
+            color: lightcoral;
+        }
+
+        .output p:nth-child(even) {
+            color: lightseagreen;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form-container">
+        <div class="form-row">
+            <label for="inputType">Select input type: </label>
+            <select id="inputType">
+                <option value="button">button</option>
+                <option value="checkbox">checkbox</option>
+                <option value="color">color</option>
+                <option value="date">date</option>
+                <option value="datetime-local">datetime-local</option>
+                <option value="email">email</option>
+                <option value="file">file</option>
+                <option value="hidden">hidden</option>
+                <option value="image">image</option>
+                <option value="month">month</option>
+                <option value="number">number</option>
+                <option value="password">password</option>
+                <option value="radio">radio</option>
+                <option value="range">range</option>
+                <option value="reset">reset</option>
+                <option value="search">search</option>
+                <option value="submit">submit</option>
+                <option value="tel">tel</option>
+                <option value="text">text</option>
+                <option value="time">time</option>
+                <option value="url">url</option>
+                <option value="week">week</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <input id="input" type="button" />
+        </div>
+    </form>
+
+    <div id="output" class="output">
+
+    </div>
+
+    <script type="text/javascript">
+        function stringify_object(object, depth = 0, max_depth = 2) {
+            // change max_depth to see more levels, for a touch event, 2 is good
+            if (depth > max_depth)
+                return 'Object';
+
+            const obj = {};
+            for (let key in object) {
+                let value = object[key];
+                if (value instanceof Node)
+                    // specify which properties you want to see from the node
+                    value = { 
+                        id: value.id,
+                        value: value.value 
+                    };
+                else if (value instanceof Window)
+                    value = 'Window';
+                else if (value instanceof Object)
+                    value = stringify_object(value, depth + 1, max_depth);
+
+                obj[key] = value;
+            }
+
+            return depth ? obj : JSON.stringify(obj);
+        }
+
+        let inputTypeSelect = document.getElementById("inputType");
+        let input = document.getElementById("input");
+        let output = document.getElementById("output");
+
+        function logEvent(e) {
+            output.innerHTML += `<p>${stringify_object(event, 0, 2)}</p>`;
+        }
+
+        let defaultValue = "button";
+        inputTypeSelect.value = defaultValue;
+        input.setAttribute("type", defaultValue);
+
+        inputTypeSelect.addEventListener("change", logEvent)
+        inputTypeSelect.addEventListener("change", function(e) {
+            input.value = "";
+            input.setAttribute("type", e.target.value);
+        });
+
+        input.addEventListener("change", logEvent);
+        input.addEventListener("keydown", logEvent);
+        input.addEventListener("keyup", logEvent);
+    </script>
+</body>
+
+</html>
