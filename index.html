@@ -119,6 +119,8 @@
         let inputTypeSelect = document.getElementById("inputType");
         let input = document.getElementById("input");
         let output = document.getElementById("output");
+        
+        output.innerHTML = `<p>${window.navigator.userAgent}</p>`;
 
         function logEvent(e) {
             output.innerHTML += `<p>${stringify_object(event, 0, 2)}</p>`;
