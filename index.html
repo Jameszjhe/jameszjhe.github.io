@@ -128,7 +128,7 @@
         inputTypeSelect.value = defaultValue;
         input.setAttribute("type", defaultValue);
 
-        inputTypeSelect.addEventListener("change", logEvent)
+        // inputTypeSelect.addEventListener("change", logEvent)
         inputTypeSelect.addEventListener("change", function(e) {
             input.value = "";
             input.setAttribute("type", e.target.value);
