@@ -80,9 +80,21 @@
                 <option value="url">url</option>
                 <option value="week">week</option>
             </select>
+            
+            <label for="inputMode">Select input Mode: </label>
+            <select id="inputMode">
+                <option value="none">none</option>
+                <option value="text">text</option>
+                <option value="decimal">decimal</option>
+                <option value="numeric">numeric</option>
+                <option value="tel">tel</option>
+                <option value="search">search</option>
+                <option value="email">email</option>
+                <option value="url">url</option>
+            </select>
         </div>
         <div class="form-row">
-            <input id="input" type="button" />
+            <input id="input" type="button" inputmode="none" />
         </div>
     </form>
 
@@ -117,6 +129,7 @@
         }
 
         let inputTypeSelect = document.getElementById("inputType");
+        let inputModeSelect = document.getElementById("inputMode");
         let input = document.getElementById("input");
         let output = document.getElementById("output");
         
@@ -126,14 +139,20 @@
             output.innerHTML += `<p>${stringify_object(event, 0, 2)}</p>`;
         }
 
-        let defaultValue = "button";
-        inputTypeSelect.value = defaultValue;
-        input.setAttribute("type", defaultValue);
+        inputTypeSelect.value = "text";
+        input.setAttribute("type", "text");
+        
+        inputModeSelect.value = "none"
+        input.setAttribute("type", "none");
 
-        // inputTypeSelect.addEventListener("change", logEvent)
         inputTypeSelect.addEventListener("change", function(e) {
             input.value = "";
             input.setAttribute("type", e.target.value);
+        });
+        
+        inputModeSelect.addEventListener("change", function(e) {
+            input.value = "";
+            input.setAttribute("inputmode", e.target.value);
         });
 
         input.addEventListener("change", logEvent);
